@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>RouteOn Signin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/styles2.css" />
+  <script type="module" src="assets/js/signin.js" defer></script>
+</head>
+<body>
+  
+  <div class="container">
+    <div class="grid">
+      <div class="card span-6">
+        <h2>Rider / Driver Signin</h2>
+        <form id="signinForm" autocomplete="on" title="Enter your credentials">
+          <label for="si_user">Username</label>
+          <input id="si_user" name="username" required placeholder="e.g., suresh" title="Your username"/>
+
+          <label for="si_pass">Password</label>
+          <input id="si_pass" name="password" type="password" required placeholder="••••" title="Your password"/>
+
+          <div class="row" style="margin-top:6px">
+            <input type="checkbox" id="rememberDefault" />
+            <label for="rememberDefault" class="muted" title="Saves your current password locally">Save default password</label>
+          </div>
+
+          <button type="submit" style="margin-top:10px">Sign in</button>
+          <p id="signinMsg" class="muted" style="margin-top:8px"></p>
+          <div class="row" style="margin-top:8px">
+            <a class="btn-outline" href="signup.html">Go to Signup</a>
+            <a class="btn-outline" href="index.html">Back to Dashboard</a>
+          </div>
+        </form>
+      </div>
+      <div class="card span-6">
+        <h3>Info</h3>
+        <ul class="muted">
+          <li>Demo only: users & passwords in <code>localStorage</code>.</li>
+          <li>Check “Save default password” to persist the password.</li>
+          <li>Alert shown for invalid credentials.</li>
+        </ul>
+        <pre id="debugSignin">Debug: (waiting)</pre>
+      </div>
+    </div>
+  </div>
+  <footer>© 2025 RouteOn Demo. For training only.</footer>
+</body>
+</html>

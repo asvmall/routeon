@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>RouteOn Signup</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/styles2.css" />
+  <script type="module" src="assets/js/signup.js" defer></script>
+</head>
+<body>
+  
+  <div class="container">
+    <div class="grid">
+      <div class="card span-6">
+        <h2>Create Account</h2>
+        <form id="signupForm" autocomplete="on">
+          <label for="su_user">Username</label>
+          <input id="su_user" name="username" required minlength="3" maxlength="50" placeholder="choose a username" title="3-50 characters"/>
+
+          <label for="su_email">Email</label>
+          <input id="su_email" name="email" type="email" placeholder="you@example.com" title="Valid email address"/>
+
+          <label for="su_pass">Password</label>
+          <input id="su_pass" name="password" type="password" required minlength="4" placeholder="min 4 chars" title="Min 4 characters"/>
+
+          <div class="row" style="margin-top:8px">
+            <span class="muted" title="Pick a vehicle type">Vehicle type:</span>
+            <label><input type="radio" name="vehicle" value="bike" checked /> Bike</label>
+            <label><input type="radio" name="vehicle" value="auto" /> Auto</label>
+            <label><input type="radio" name="vehicle" value="cab" /> Cab</label>
+          </div>
+
+          <div class="row" style="margin-top:8px">
+            <label title="Air Conditioning"><input type="checkbox" id="opt_ac" /> AC</label>
+            <label title="Extra Luggage"><input type="checkbox" id="opt_luggage" /> Luggage</label>
+            <label title="Baby Seat"><input type="checkbox" id="opt_baby" /> Baby Seat</label>
+          </div>
+
+          <label for="su_city" style="margin-top:8px">City (dropdown)</label>
+          <select id="su_city" title="Pick your city">
+            <option>Hyderabad</option><option>Bengaluru</option><option>Pune</option>
+          </select>
+
+          <label for="su_pay" style="margin-top:8px">Payment methods (listbox, multi)</label>
+          <select id="su_pay" multiple size="4" title="Ctrl/Cmd for multi-select">
+            <option>Cash</option><option>UPI</option><option>Credit Card</option><option>Wallet</option>
+          </select>
+
+          <div class="row" style="margin-top:8px">
+            <label title="Receive email updates"><input type="checkbox" id="su_updates" checked /> Email updates</label>
+            <label title="Accept terms"><input type="checkbox" id="su_tnc" required /> I agree to T&amp;C</label>
+          </div>
+
+          <button type="submit" style="margin-top:12px">Create Account</button>
+          <p id="signupMsg" class="muted" style="margin-top:8px"></p>
+          <div class="row" style="margin-top:8px">
+            <a class="btn-outline" href="signin.html">Go to Signin</a>
+            <a class="btn-outline" href="index.html">Back to Dashboard</a>
+          </div>
+        </form>
+      </div>
+
+      <div class="card span-6">
+        <h3>Selection preview</h3>
+        <pre id="debugSignup">Debug: (waiting)</pre>
+      </div>
+    </div>
+  </div>
+  <footer>© 2025 RouteOn Demo. For training only.</footer>
+</body>
+</html>
