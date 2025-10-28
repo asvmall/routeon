@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>RouteOn Driver Docs Upload</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <script type="module" src="assets/js/upload.js" defer></script>
+</head>
+<body>
+  <div class="header">
+  <div class="inner">
+    <div class="brand">
+      <span class="badge">RouteOn</span>
+      <strong>Driver Docs Upload</strong>
+      <span class="badge-mini">Taxi UI Kit</span>
+    </div>
+    <nav class="nav">
+      <a href="index.html">Dashboard</a>
+      <a href="signin.html">Signin</a>
+      <a href="signup.html">Signup</a>
+      <a href="interactions.html">Ride Card & Actions</a>
+      <a href="upload.html">Driver Docs Upload</a>
+      <a href="scroll.html">Scroll</a>
+    </nav>
+  </div>
+</div>
+  <div class="container">
+    <div class="grid">
+      <div class="card span-6">
+        <h2>Upload (Button)</h2>
+        <form id="fileForm">
+          <label for="fileInput">Driver Document (e.g., License)</label>
+          <input type="file" id="fileInput" />
+          <button type="button" id="btnShow">Show File Info</button>
+        </form>
+        <pre id="uploadResult">Result will appear here…</pre>
+      </div>
+      <div class="card span-6">
+        <h2>Drag & Drop</h2>
+        <div id="dropzone" class="dropzone" title="Drag a file from your desktop here">
+          Drop a file here
+        </div>
+        <pre id="dropResult">Drop result will appear here…</pre>
+      </div>
+    </div>
+  </div>
+  <footer>© 2025 RouteOn Demo. For training only.</footer>
+</body>
+</html>

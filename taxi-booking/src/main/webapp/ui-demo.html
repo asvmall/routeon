@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>UI Demo – HTML + JS Only</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root { --b:#1f2937; --m:#374151; --t:#6b7280; --br:#e5e7eb; --bg:#f9fafb; --brand:#2563eb; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; background:var(--bg); color:var(--b); }
+    header { padding:16px 20px; background:#fff; border-bottom:1px solid var(--br); position:sticky; top:0; z-index:10; }
+    header h1 { margin:0; font-size:18px; }
+    .container { max-width:1100px; margin:24px auto; padding:0 16px; }
+    .tabs { display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; }
+    .tab-btn { padding:8px 12px; border:1px solid var(--br); background:#fff; border-radius:10px; cursor:pointer; }
+    .tab-btn.active { background:var(--brand); color:#fff; border-color:var(--brand); }
+    .grid { display:grid; grid-template-columns: repeat(12, 1fr); gap:16px; }
+    .card { grid-column: span 12; background:#fff; border:1px solid var(--br); border-radius:14px; padding:16px; }
+    @media (min-width:900px){ .span-6{ grid-column:span 6; } .span-4{ grid-column:span 4; } }
+    label { display:block; margin:8px 0 4px; font-size:14px; color:var(--m); }
+    input, select, button, textarea { width:100%; padding:10px 12px; border:1px solid var(--br); border-radius:10px; background:#fff; }
+    button { cursor:pointer; }
+    .row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    .muted { color:var(--t); font-size:12px; }
+    .ok { color:#059669; }
+    .err { color:#b00020; }
+    .hoverable { padding:10px; border:1px dashed var(--br); border-radius:10px; transition: background .15s; }
+    .hoverable:hover { background:#f3f6ff; }
+    .highlight { background:#fff5cc !important; }
+    .dropzone { border:2px dashed #9db7ff; border-radius:12px; padding:18px; text-align:center; }
+    .context { position:absolute; display:none; background:#fff; border:1px solid var(--br); border-radius:10px; padding:8px; box-shadow:0 12px 30px rgba(0,0,0,.08); }
+    .context button { display:block; width:180px; text-align:left; margin:4px 0; }
+    .topbtn { position:fixed; right:16px; bottom:16px; padding:10px 14px; border-radius:999px; border:1px solid var(--br); background:#fff; display:none; }
+    .spacer { height:900px; }
+    pre { background:#f6f7f9; border:1px solid var(--br); border-radius:10px; padding:10px; overflow:auto; }
+    a.btn-link { text-decoration:none; border:1px solid var(--br); padding:8px 12px; border-radius:8px; background:#fff; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 title="All features in one HTML file">UI Demo — HTML + JavaScript</h1>
+  </header>
+
+  <div class="container">
+    <!-- Tabs -->
+    <div class="tabs" role="tablist">
+      <button class="tab-btn active" data-tab="signin">Signin</button>
+      <button class="tab-btn" data-tab="signup">Signup</button>
+      <button class="tab-btn" data-tab="interactions">Mouse & Inputs</button>
+      <button class="tab-btn" data-tab="uploads">File Upload</button>
+      <button class="tab-btn" data-tab="scroll">Scroll</button>
+    </div>
+
+    <!-- Signin -->
+    <section id="signin" class="grid">
+      <div class="card span-6">
+        <h2>Signin</h2>
+        <form id="signinForm" autocomplete="on" title="Enter your credentials">
+          <label for="si_user">Username</label>
+          <input id="si_user" name="username" required placeholder="e.g., suresh" title="Your username"/>
+
+          <label for="si_pass">Password</label>
+          <input id="si_pass" name="password" type="password" required placeholder="••••" title="Your password"/>
+
+          <div class="row" style="margin-top:6px">
+            <input type="checkbox" id="rememberDefault" />
+            <label for="rememberDefault" class="muted" title="Saves your current password locally">Save default password</label>
+          </div>
+
+          <button type="submit" style="margin-top:10px">Sign in</button>
+          <p id="signinMsg" class="muted" style="margin-top:8px"></p>
+          <div class="row" style="margin-top:8px">
+            <a class="btn-link" href="#signup" onclick="switchTab('signup')">Go to Signup</a>
+          </div>
+        </form>
+      </div>
+
+      <div class="card span-6">
+        <h3>How it works</h3>
+        <ul class="muted">
+          <li>Demo only: users & passwords stored in <code>localStorage</code>.</li>
+          <li>Check “Save default password” to persist the current password in browser storage.</li>
+          <li>Error shows a JavaScript <code>alert()</code>.</li>
+        </ul>
+        <pre id="debugSignin">Debug: (waiting)</pre>
+      </div>
+    </section>
+
+    <!-- Signup -->
+    <section id="signup" class="grid" style="display:none">
+      <div class="card span-6">
+        <h2>Signup</h2>
+        <form id="signupForm" autocomplete="on">
+          <label for="su_user">Username</label>
+          <input id="su_user" name="username" required minlength="3" maxlength="50" placeholder="choose a username" title="3-50 characters"/>
+
+          <label for="su_email">Email</label>
+          <input id="su_email" name="email" type="email" placeholder="you@example.com" title="Valid email address"/>
+
+          <label for="su_pass">Password</label>
+          <input id="su_pass" name="password" type="password" required minlength="4" placeholder="min 4 chars" title="Min 4 characters"/>
+
+          <div class="row" style="margin-top:8px">
+            <!-- Radios -->
+            <span class="muted" title="Pick a role">Role:</span>
+            <label><input type="radio" name="role" value="student" checked /> Student</label>
+            <label><input type="radio" name="role" value="teacher" /> Teacher</label>
+          </div>
+
+          <div class="row" style="margin-top:8px">
+            <!-- Checkboxes -->
+            <label title="Receive email updates"><input type="checkbox" id="su_updates" checked /> Email updates</label>
+            <label title="Accept terms"><input type="checkbox" id="su_tnc" required /> I agree to T&amp;C</label>
+          </div>
+
+          <!-- Dropdown -->
+          <label for="su_city" style="margin-top:8px">City (dropdown)</label>
+          <select id="su_city" title="Pick your city">
+            <option>Hyderabad</option><option>Bengaluru</option><option>Pune</option>
+          </select>
+
+          <!-- Listbox -->
+          <label for="su_interests" style="margin-top:8px">Interests (listbox, multi-select)</label>
+          <select id="su_interests" multiple size="5" title="Ctrl/Cmd for multi-select">
+            <option>Java</option><option>Spring Boot</option><option>React</option><option>DevOps</option><option>Databases</option>
+          </select>
+
+          <button type="submit" style="margin-top:12px">Create Account</button>
+          <p id="signupMsg" class="muted" style="margin-top:8px"></p>
+          <div class="row" style="margin-top:8px">
+            <a class="btn-link" href="#signin" onclick="switchTab('signin')">Go to Signin</a>
+          </div>
+        </form>
+      </div>
+
+      <div class="card span-6">
+        <h3>Form controls demo</h3>
+        <p class="muted">This section demonstrates radios, checkboxes, dropdown, and listbox controls with tooltips.</p>
+        <pre id="debugSignup">Debug: (waiting)</pre>
+      </div>
+    </section>
+
+    <!-- Interactions -->
+    <section id="interactions" class="grid" style="display:none">
+      <div class="card span-6">
+        <h2>Mouse interactions</h2>
+        <div id="hoverBox" class="hoverable" title="Tooltip: hover to see highlight">
+          Hover over me (tooltip via title). Double-click to toggle highlight. Right-click for a custom menu.
+        </div>
+
+        <div id="contextMenu" class="context" role="menu">
+          <button onclick="ctxAction('Action A')">Action A</button>
+          <button onclick="ctxAction('Action B')">Action B</button>
+          <button onclick="ctxAction('Copy text')">Copy text</button>
+        </div>
+
+        <p>Last action: <span id="lastAction" class="muted">none</span></p>
+      </div>
+
+      <div class="card span-6">
+        <h3>Alert box on error</h3>
+        <form id="errorForm" title="Shows alert() if the input is empty">
+          <label for="errInput">Type something</label>
+          <input id="errInput" placeholder="Leave empty and press submit to see an alert" />
+          <button type="submit" style="margin-top:8px">Submit</button>
+        </form>
+        <p class="muted">If input is empty, you’ll see <code>alert('Error...')</code>.</p>
+      </div>
+    </section>
+
+    <!-- Uploads -->
+    <section id="uploads" class="grid" style="display:none">
+      <div class="card span-6">
+        <h2>File upload (button)</h2>
+        <form id="fileForm">
+          <input type="file" id="fileInput" />
+          <button type="button" onclick="handleUpload()">Show File Info</button>
+        </form>
+        <pre id="uploadResult">Result will appear here…</pre>
+      </div>
+
+      <div class="card span-6">
+        <h2>Drag & Drop</h2>
+        <div id="dropzone" class="dropzone" title="Drag a file from your desktop here">
+          Drop a file here
+        </div>
+        <pre id="dropResult">Drop result will appear here…</pre>
+      </div>
+    </section>
+
+    <!-- Scroll -->
+    <section id="scroll" class="grid" style="display:none">
+      <div class="card span-12">
+        <h2>Scroll operations</h2>
+        <p class="muted">Scroll down to reveal the floating “Back to Top” button.</p>
+        <div class="spacer"></div>
+        <div class="spacer"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Back to Top -->
+  <button id="toTop" class="topbtn" title="Scroll to top">↑ Top</button>
+
+<script>
+  // --- Utilities ---
+  const $ = sel => document.querySelector(sel);
+  const $$ = sel => document.querySelectorAll(sel);
+
+  // Tabs
+  function switchTab(id){
+    $$('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === id));
+    ['signin','signup','interactions','uploads','scroll'].forEach(s => {
+      const el = $('#'+s);
+      el.style.display = (s === id ? '' : 'none');
+    });
+    if (location.hash !== '#'+id) history.replaceState(null, '', '#'+id);
+  }
+  $$('.tab-btn').forEach(btn => btn.addEventListener('click', ()=> switchTab(btn.dataset.tab)));
+
+  // Handle hash navigation on load
+  window.addEventListener('DOMContentLoaded', ()=>{
+    const hash = (location.hash || '').replace('#','');
+    if (hash && $('#'+hash)) switchTab(hash);
+
+    // Default password load for Signin
+    const savedPass = localStorage.getItem('default_password');
+    if (savedPass) $('#si_pass').value = savedPass;
+
+    renderDebug();
+  });
+
+  // --- Demo user store in localStorage ---
+  const USERS_KEY = 'demo_users'; // { username: password }
+  function getUsers(){
+    try { return JSON.parse(localStorage.getItem(USERS_KEY)) || {}; }
+    catch { return {}; }
+  }
+  function setUsers(obj){
+    localStorage.setItem(USERS_KEY, JSON.stringify(obj));
+  }
+
+  // --- Signin ---
+  $('#signinForm').addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const u = $('#si_user').value.trim();
+    const p = $('#si_pass').value;
+
+    if (!u || !p){
+      alert('Error: please enter username and password.');
+      return;
+    }
+
+    const users = getUsers();
+    if (!users[u] || users[u] !== p){
+      alert('Invalid credentials!');
+      $('#signinMsg').textContent = 'Signin failed.';
+      $('#signinMsg').className = 'err';
+    } else {
+      $('#signinMsg').textContent = 'Welcome, ' + u + '!';
+      $('#signinMsg').className = 'ok';
+    }
+
+    // Save default password if checked
+    if ($('#rememberDefault').checked) {
+      localStorage.setItem('default_password', p);
+    }
+
+    renderDebug();
+  });
+
+  // --- Signup ---
+  $('#signupForm').addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const u = $('#su_user').value.trim();
+    const em = $('#su_email').value.trim();
+    const p = $('#su_pass').value;
+    const tnc = $('#su_tnc').checked;
+
+    if (!u || p.length < 4 || !tnc){
+      alert('Error: fill all required fields (password ≥ 4, accept T&C).');
+      return;
+    }
+
+    const users = getUsers();
+    if (users[u]){
+      alert('Error: username already exists.');
+      return;
+    }
+    users[u] = p;
+    setUsers(users);
+
+    $('#signupMsg').textContent = 'Signup successful. You can Sign in now.';
+    $('#signupMsg').className = 'ok';
+    renderDebug();
+  });
+
+  // Debug panels
+  function renderDebug(){
+    $('#debugSignin').textContent = 'Users: ' + JSON.stringify(getUsers(), null, 2) +
+      '\nDefault password: ' + (localStorage.getItem('default_password') || '(none)');
+    $('#debugSignup').textContent = 'Interests selected will be read from listbox.\nUsers map keys: ' +
+      Object.keys(getUsers()).join(', ');
+  }
+
+  // --- Mouse interactions ---
+  const hoverBox = $('#hoverBox');
+  const lastAction = $('#lastAction');
+  const ctx = $('#contextMenu');
+
+  hoverBox.addEventListener('mouseover', ()=> lastAction.textContent = 'mouse over');
+  hoverBox.addEventListener('mouseout',  ()=> lastAction.textContent = 'mouse out');
+  hoverBox.addEventListener('dblclick', ()=>{
+    hoverBox.classList.toggle('highlight');
+    lastAction.textContent = 'double click';
+  });
+
+  hoverBox.addEventListener('contextmenu', (e)=>{
+    e.preventDefault();
+    ctx.style.display = 'block';
+    ctx.style.left = e.pageX + 'px';
+    ctx.style.top  = e.pageY + 'px';
+    lastAction.textContent = 'right click (custom menu)';
+  });
+  document.addEventListener('click', ()=> ctx.style.display = 'none');
+  function ctxAction(label){
+    alert('You clicked: ' + label);
+    ctx.style.display = 'none';
+  }
+
+  // --- Error alert form ---
+  $('#errorForm').addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const v = $('#errInput').value.trim();
+    if (!v) alert('Error: input cannot be empty!');
+    else alert('Submitted: ' + v);
+  });
+
+  // --- File upload button (no server; just show info) ---
+  function humanBytes(n){
+    if (n < 1024) return n + ' B';
+    if (n < 1024*1024) return (n/1024).toFixed(1) + ' KB';
+    return (n/1024/1024).toFixed(1) + ' MB';
+  }
+  window.handleUpload = function(){
+    const f = $('#fileInput').files[0];
+    if (!f){ alert('Pick a file first'); return; }
+    $('#uploadResult').textContent =
+      JSON.stringify({ name:f.name, size:humanBytes(f.size), type:f.type || '(unknown)' }, null, 2);
+  };
+
+  // --- Drag & Drop area ---
+  const dz = $('#dropzone');
+  ['dragenter','dragover','dragleave','drop'].forEach(ev=> dz.addEventListener(ev, e=>{ e.preventDefault(); e.stopPropagation(); }));
+  dz.addEventListener('dragover', ()=> dz.style.background = '#eef2ff');
+  dz.addEventListener('dragleave', ()=> dz.style.background = '');
+  dz.addEventListener('drop', (e)=>{
+    dz.style.background = '';
+    const f = e.dataTransfer.files?.[0];
+    if (!f) return;
+    $('#dropResult').textContent = JSON.stringify({ name:f.name, size:humanBytes(f.size), type:f.type || '(unknown)' }, null, 2);
+  });
+
+  // --- Scroll / Back to top ---
+  const toTop = $('#toTop');
+  window.addEventListener('scroll', ()=>{
+    toTop.style.display = (window.scrollY > 200) ? 'block' : 'none';
+  });
+  toTop.addEventListener('click', ()=> window.scrollTo({ top:0, behavior:'smooth' }));
+</script>
+</body>
+</html>
