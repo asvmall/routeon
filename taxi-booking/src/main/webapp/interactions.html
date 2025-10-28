@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>RouteOn Ride Card & Actions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <script type="module" src="assets/js/interactions.js" defer></script>
+</head>
+<body>
+  <div class="header">
+  <div class="inner">
+    <div class="brand">
+      <span class="badge">RouteOn</span>
+      <strong>Ride Card & Actions</strong>
+      <span class="badge-mini">Taxi UI Kit</span>
+    </div>
+    <nav class="nav">
+      <a href="index.html">Dashboard</a>
+      <a href="signin.html">Signin</a>
+      <a href="signup.html">Signup</a>
+      <a href="interactions.html">Ride Card & Actions</a>
+      <a href="upload.html">Driver Docs Upload</a>
+      <a href="scroll.html">Scroll</a>
+    </nav>
+  </div>
+</div>
+  <div class="container">
+    <div class="grid">
+      <div class="card span-6">
+        <h2>Ride Card (Mouse interactions)</h2>
+        <div id="rideCard" class="hoverable" title="Hover, double-click, or right-click for actions">
+          <strong>🚕 Ride #R-1098</strong><br/>
+          Pickup: <em>Madhapur</em> → Drop: <em>Gachibowli</em><br/>
+          Fare: ₹180 · ETA: 7 min
+        </div>
+
+        <div id="contextMenu" class="context" role="menu">
+          <button onclick="window.ctxAction('Call Driver')">Call Driver</button>
+          <button onclick="window.ctxAction('Share Ride')">Share Ride</button>
+          <button onclick="window.ctxAction('Cancel Ride')">Cancel Ride</button>
+        </div>
+
+        <p>Last action: <span id="lastAction" class="muted">none</span></p>
+      </div>
+
+      <div class="card span-6">
+        <h3>Quick Filters</h3>
+        <div class="row">
+          <label><input type="checkbox" checked/> Show Nearby Drivers</label>
+          <label><input type="checkbox" /> Show Surge Areas</label>
+        </div>
+        <div class="row" style="margin-top:8px">
+          <label><input type="radio" name="vt" checked/> Bike</label>
+          <label><input type="radio" name="vt"/> Auto</label>
+          <label><input type="radio" name="vt"/> Cab</label>
+        </div>
+        <label style="margin-top:8px">City (dropdown)
+          <select>
+            <option>Hyderabad</option><option>Bengaluru</option><option>Pune</option>
+          </select>
+        </label>
+        <label style="margin-top:8px">Payment methods (listbox, multi)
+          <select multiple size="4">
+            <option>Cash</option><option>UPI</option><option>Credit Card</option><option>Wallet</option>
+          </select>
+        </label>
+      </div>
+    </div>
+
+    <div class="grid" style="margin-top:10px">
+      <div class="card span-12">
+        <h3>Alert box on error (demo)</h3>
+        <form id="errorForm" title="Shows alert() if pickup is empty">
+          <label for="pickup">Pickup</label>
+          <input id="pickup" placeholder="Enter pickup point" />
+          <button type="submit" style="margin-top:8px">Confirm</button>
+        </form>
+        <p class="muted">If pickup is empty, you’ll see <code>alert('Error...')</code>.</p>
+      </div>
+    </div>
+  </div>
+  <footer>© 2025 RouteOn Demo. For training only.</footer>
+</body>
+</html>
